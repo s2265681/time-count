@@ -3,8 +3,8 @@
  * @Autor: rockshang
  * @Date: 2021-12-05 19:59:38
  */
-import createBackgroundCanvas from './bg.js'
-import digit from './digit.js'
+import createBackgroundCanvas from "./bg.js";
+import digit from "./digit.js";
 
 var WINDOW_WIDTH = 1024;
 var WINDOW_HEIGHT = 768;
@@ -15,7 +15,7 @@ var MARGIN_TOP = 60;
 var curShowTimeSeconds = 0;
 
 var balls = [];
-var pattern = null
+var pattern = null;
 // var ball = { x: 500, y:100, r: 20, vy: -4, vx: -4, g: 2 }
 const colors = [
   "#33B5E5",
@@ -33,7 +33,7 @@ const colors = [
 var time = 0;
 
 // 初始化 倒计时
-export default function countDownInit(YIYAN){
+export default function countDownInit() {
   const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
 
@@ -49,7 +49,7 @@ export default function countDownInit(YIYAN){
   curShowTimeSeconds = getCurShowTimeSeconds();
 
   setInterval(() => {
-    render(context,YIYAN);
+    render(context);
     update();
     // ball.x += ball.vx;
     // ball.y += ball.vy;
@@ -58,7 +58,7 @@ export default function countDownInit(YIYAN){
   }, 50);
   // requestAnimationFrame 替代 setInterval
   // window.requestAnimationFrame(() => updateRender(context));
-};
+}
 
 // function updateRender(context) {
 //   window.requestAnimationFrame(() => updateRender(context));
@@ -200,16 +200,17 @@ function addBalls(x, y, num) {
 }
 
 // 渲染时分秒
-function render(ctx,YIYAN) {
+async function render(ctx) {
   ctx.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   // 加背景色
-  if(pattern){
-    ctx.fillStyle = pattern
-  }else{
-    pattern = ctx.createPattern(createBackgroundCanvas(YIYAN),'repeat')
+  if (pattern) {
+    ctx.fillStyle = pattern;
+  } else {
+    let content = await createBackgroundCanvas();
+    pattern = ctx.createPattern(content, "repeat");
   }
-  ctx.fillStyle = pattern
-  ctx.fillRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT)
+  ctx.fillStyle = pattern;
+  ctx.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
   var hours = parseInt(curShowTimeSeconds / 3600);
   var minutes = parseInt((curShowTimeSeconds - hours * 3600) / 60);

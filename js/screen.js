@@ -9,7 +9,6 @@ $(function () {
   $("#exitFullScreen").on("click", function () {
     exitFullscreen();
   });
-  console.log(mobile)
   if (mobile){
     $("#fullScreen").css("display", "none");
   } 

@@ -5,12 +5,16 @@ function getCurrentTimeInfo() {
   const date = myDate.getDate();
   const hours = myDate.getHours();
   const minutes = myDate.getMinutes();
+  let dayType = 'day'
+  console.log(hours,'hours')
+  if(hours>12 && hours < 24) dayType = 'night'
   return {
     year,
     month,
     date,
     hours,
     minutes,
+    dayType
   };
 }
 
@@ -20,7 +24,7 @@ function getYIYan() {
     .then((res) => res.hitokoto);
 }
 
-function drawLand(ctx) {
+function drawLand(ctx,fromColor,toColor) {
   ctx.save();
   // ctx.translate(0, canvas.height);
   ctx.beginPath();
@@ -38,8 +42,8 @@ function drawLand(ctx) {
   ctx.lineTo(0, canvas.height);
   ctx.closePath();
   var landStyle = ctx.createLinearGradient(0, 800, 0, 0);
-  landStyle.addColorStop(0.0, "#030");
-  landStyle.addColorStop(1.0, "#580");
+  landStyle.addColorStop(0.0, fromColor);
+  landStyle.addColorStop(1.0, toColor);
   ctx.fillStyle = landStyle;
   ctx.fill();
 }
@@ -74,23 +78,6 @@ function drawStar(ctx, r, R, x, y, rot = 0) {
   ctx.closePath();
   ctx.stroke();
   ctx.fill();
-}
-
-// 调用月亮
-function fillMoon(ctx, d, x, y, R, rot, /*optional*/ fillColor) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate((rot * Math.PI) / 180);
-  ctx.scale(R, R);
-  pathMoon(ctx, d);
-  ctx.fillStyle = fillColor || "#fb5";
-  ctx.shadowColor = "yellow";
-  ctx.shadowBlur = 35;
-  // ctx.shadowOffsetX = 10;
-  // ctx.shadowOffsetY = 10;
-  ctx.fillStyle = "rgba(255,255,255,0.8)";
-  ctx.fill();
-  ctx.restore();
 }
 
 function pathMoon(ctx, d) {
@@ -145,6 +132,58 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(() => resolve(), ms));
 }
 
+
+function drawNightBg(ctx){
+  var gradientSty = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradientSty.addColorStop(1, "#035");
+  gradientSty.addColorStop(0, "#000");
+  // ctx.fillStyle = "#000";
+  ctx.fillStyle = gradientSty;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // ctx.globalCompositeOperation = 'copy'
+}
+
+function drawDayBg(ctx){
+  var gradientSty = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradientSty.addColorStop(1, "#FFFFFF");
+  gradientSty.addColorStop(0, "#FDD38B");
+  ctx.fillStyle = gradientSty;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+
+// 调用月亮
+function fillMoon(ctx, d, x, y, R, rot, /*optional*/ fillColor) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((rot * Math.PI) / 180);
+  ctx.scale(R, R);
+  pathMoon(ctx, d);
+  ctx.fillStyle = fillColor || "#fb5";
+  ctx.shadowColor = "yellow";
+  ctx.shadowBlur = 35;
+  // ctx.shadowOffsetX = 10;
+  // ctx.shadowOffsetY = 10;
+  ctx.fillStyle = "rgba(255,255,255,0.8)";
+  ctx.fill();
+  ctx.restore();
+}
+
+
+function drawSun(ctx, x, y,r, /*optional*/ fillColor){
+  ctx.save()
+  ctx.beginPath()
+  ctx.arc(x,y,r,0,Math.PI*2)
+  ctx.fillStyle =  fillColor || '#ED794E';
+  ctx.shadowColor = fillColor ||  "#ED794E";
+  ctx.shadowBlur = 35;
+  // ctx.shadowOffsetX = 10;
+  // ctx.shadowOffsetY = 10;
+  ctx.fill()
+  ctx.closePath()
+  ctx.restore()
+}
+
 export {
   getCurrentTimeInfo,
   getYIYan,
@@ -153,4 +192,7 @@ export {
   drawStar,
   fillMoon,
   isMobile,
+  drawNightBg,
+  drawDayBg,
+  drawSun
 };

@@ -17,7 +17,6 @@
     </div>
   </body>
   <script src="js/jquery.min.js"></script>
-  <script type="module" src="index.js"></script>
   <!-- 天气接口 -->
   <script
     async
@@ -35,5 +34,6 @@
       weatherCallback = Promise.resolve({ day: day[1], night: night[1] });
     }
   </script>
+  <script type="module" src="index.js"></script>
   <script src="./js/screen.js" type="module"></script>
 </html>
