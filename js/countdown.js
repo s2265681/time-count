@@ -5,7 +5,6 @@
  */
 import createBackgroundCanvas from './bg.js'
 import digit from './digit.js'
-import { drawYiYan } from './utils.js'
 
 var WINDOW_WIDTH = 1024;
 var WINDOW_HEIGHT = 768;

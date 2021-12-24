@@ -44,13 +44,13 @@ function drawLand(ctx) {
   ctx.fill();
 }
 
-function drawYiYan(ctx, text) {
+function drawText(ctx, text) {
   ctx.save();
   ctx.shadowColor = "yellow";
   // ctx.shadowOffsetX = 3;
   // ctx.shadowOffsetY = 3;
   // ctx.shadowBlur = 3;
-  ctx.font = "bold 25px Arial";
+  ctx.font = `bold ${isMobile() ? 15 : 25}px Arial`;
   ctx.fillStyle = "rgba(255,255,255,0.8)";
   ctx.fillText(text, 40, canvas.height * 0.96);
   ctx.restore();
@@ -105,5 +105,52 @@ function dis(x1, y1, x2, y2) {
   return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }
 
+const ua = navigator.userAgent;
+const isWindowsPhone = /(?:Windows Phone)/.test(ua);
+const isPhone = /(?:iPhone|iPod)/.test(ua);
+const isAndroid = /(?:Android)/.test(ua);
+const isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone;
 
-export { getCurrentTimeInfo, getYIYan, drawLand, drawYiYan, drawStar, fillMoon };
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function is_iPad() {
+  return (
+    navigator.userAgent.match(/(iPad)/) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  ); // /iPad/i.test(navigator.userAgent)
+}
+
+const isTablet =
+  navigator.platform === "iPad" ||
+  /(?:iPad|PlayBook)/.test(ua) ||
+  // (isAndroid && !/(?:Mobile)/.test(ua)) ||  // 安卓平板 暂时当作移动端处理
+  /(?:Tablet)/.test(ua) ||
+  is_iPad();
+
+function isPC() {
+  return !isPhone && !isAndroid && !isSymbian && !isTablet;
+}
+
+function isPad() {
+  return isTablet;
+}
+
+function isMobile() {
+  return isAndroid || isPhone || isSymbian || window.innerWidth < 450;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(() => resolve(), ms));
+}
+
+export {
+  getCurrentTimeInfo,
+  getYIYan,
+  drawLand,
+  drawText,
+  drawStar,
+  fillMoon,
+  isMobile,
+};
