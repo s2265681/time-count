@@ -207,11 +207,7 @@ function render(ctx) {
   if(pattern){
     ctx.fillStyle = pattern
   }else{
-    fetch("https://v1.hitokoto.cn/")
-    .then((response) => response.json())
-    .then((res) => {
-      pattern = ctx.createPattern(createBackgroundCanvas(res.hitokoto),'repeat')
-    });
+    pattern = ctx.createPattern(createBackgroundCanvas(),'repeat')
   }
   ctx.fillStyle = pattern
   ctx.fillRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT)
