@@ -4,35 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="css/index.css" />
   </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-  </style>
   <body style="height: 100vh">
     <canvas id="canvas" style="height: 100%">
       当前浏览器不支持Canvas，请更换浏览器后再试试
     </canvas>
-    <script src="js/jquery.min.js"></script>
-    <script type="module" src="index.js"></script>
-    <!-- 天气接口 -->
-    <script
-      async
-      type="text/javascript"
-      src="https://cdn.weather.hao.360.cn/sed_api_weather_info.php?code=101210101"
-    ></script>
-    <!-- 天气接受回调 -->
-    <script>
-      var weatherCallback;
-      function callback(data) {
-        var wt = data.weather;
-        var currentDay = wt[0];
-        var day = currentDay.info.day;
-        var night = currentDay.info.night;
-        weatherCallback = Promise.resolve({ day: day[1], night: night[1] });
-      }
-    </script>
+    <!-- 全屏退出全屏 -->
+    <div class="screen_control">
+      <img id="fullScreen" src="./image/fullscreen.png" />
+      <img id="exitFullScreen" src="./image/exitfullscreen.png" />
+    </div>
   </body>
+  <script src="js/jquery.min.js"></script>
+  <script type="module" src="index.js"></script>
+  <!-- 天气接口 -->
+  <script
+    async
+    type="text/javascript"
+    src="https://cdn.weather.hao.360.cn/sed_api_weather_info.php?code=101210101"
+  ></script>
+  <!-- 天气接受回调 -->
+  <script>
+    var weatherCallback;
+    function callback(data) {
+      var wt = data.weather;
+      var currentDay = wt[0];
+      var day = currentDay.info.day;
+      var night = currentDay.info.night;
+      weatherCallback = Promise.resolve({ day: day[1], night: night[1] });
+    }
+  </script>
+  <script src="./js/screen.js"></script>
 </html>

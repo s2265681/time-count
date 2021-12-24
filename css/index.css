@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.screen_control{
+    position: fixed;
+    bottom: 2%;
+    right: 3%;
+    color: #fff;
+    cursor: pointer;
+}
+
+.screen_control img{
+   width: 30px;
+}

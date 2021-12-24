@@ -6,8 +6,13 @@
 import { getCurrentTimeInfo, getYIYan } from "./js/utils.js";
 import countDownInit from "./js/countdown.js";
 
+var YIYAN = '举头望明月，对影成三人'
 window.onload = async function () {
-  var YIYAN = await getYIYan();
+  try {
+    YIYAN = await getYIYan();
+  } catch (error) {
+    console.log(error)
+  }
   countDownInit(YIYAN);
   weatherCallback.then((res) => {
     console.log("当前天气", res);
