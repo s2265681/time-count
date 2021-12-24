@@ -5,9 +5,9 @@
  * 变换背景
  * 这里处理 YIYAN
  */
-import { getYIYan, drawLand, drawStar,fillMoon } from "./utils.js";
+import { drawYiYan, drawLand, drawStar, fillMoon } from "./utils.js";
 // 通过createPattern作为背景使用 注意缓存起来 防止每次刷新
-export default function createBackgroundCanvas() {
+export default function createBackgroundCanvas(YIYAN) {
   var canvas = document.createElement("canvas");
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;
@@ -23,6 +23,8 @@ export default function createBackgroundCanvas() {
   fillMoon(context, 2, canvas.width - 200, 130, 60, -30);
   // 画草地
   drawLand(context);
+  // 画文字
+  drawYiYan(context, YIYAN);
   // 画星星
   for (let i = 0; i < 200; i++) {
     let r = Math.random() * 10 + 5;

@@ -5,6 +5,7 @@
  */
 import createBackgroundCanvas from './bg.js'
 import digit from './digit.js'
+import { drawYiYan } from './utils.js'
 
 var WINDOW_WIDTH = 1024;
 var WINDOW_HEIGHT = 768;
@@ -33,7 +34,7 @@ const colors = [
 var time = 0;
 
 // 初始化 倒计时
-export default function countDownInit(){
+export default function countDownInit(YIYAN){
   const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
 
@@ -48,9 +49,8 @@ export default function countDownInit(){
   canvas.height = WINDOW_HEIGHT;
   curShowTimeSeconds = getCurShowTimeSeconds();
 
-
   setInterval(() => {
-    render(context);
+    render(context,YIYAN);
     update();
     // ball.x += ball.vx;
     // ball.y += ball.vy;
@@ -201,13 +201,13 @@ function addBalls(x, y, num) {
 }
 
 // 渲染时分秒
-function render(ctx) {
+function render(ctx,YIYAN) {
   ctx.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   // 加背景色
   if(pattern){
     ctx.fillStyle = pattern
   }else{
-    pattern = ctx.createPattern(createBackgroundCanvas(),'repeat')
+    pattern = ctx.createPattern(createBackgroundCanvas(YIYAN),'repeat')
   }
   ctx.fillStyle = pattern
   ctx.fillRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT)

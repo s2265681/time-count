@@ -44,15 +44,15 @@ function drawLand(ctx) {
   ctx.fill();
 }
 
-function drawYiYan(ctx) {
+function drawYiYan(ctx, text) {
   ctx.save();
   ctx.shadowColor = "yellow";
-  ctx.shadowOffsetX = 3;
-  ctx.shadowOffsetY = 3;
-  ctx.shadowBlur = 3;
+  // ctx.shadowOffsetX = 3;
+  // ctx.shadowOffsetY = 3;
+  // ctx.shadowBlur = 3;
   ctx.font = "bold 25px Arial";
   ctx.fillStyle = "rgba(255,255,255,0.8)";
-  ctx.fillText(YIYAN, 40, canvas.height * 0.96);
+  ctx.fillText(text, 40, canvas.height * 0.96);
   ctx.restore();
 }
 
