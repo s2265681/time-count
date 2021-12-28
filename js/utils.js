@@ -3,10 +3,11 @@ function getCurrentTimeInfo() {
   const year = myDate.getFullYear();
   const month = myDate.getMonth() + 1;
   const date = myDate.getDate();
-  const hours = myDate.getHours();
-  const minutes = myDate.getMinutes();
+  let hours = myDate.getHours();
+  hours = hours < 10 ? '0' + hours : hours 
+  let minutes = myDate.getMinutes();
+  minutes = minutes < 10 ? '0' + minutes : minutes 
   let dayType = 'day'
-  console.log(hours,'hours')
   if(hours>12 && hours < 24) dayType = 'night'
   return {
     year,
