@@ -16,13 +16,12 @@ window.onload = async function () {
 
 window.addEventListener("keydown", (e) => {
   const { hours, minutes } = getCurrentTimeInfo()
-  console.log(hours, minutes,'hours, minutes')
   if (e.keyCode === 32 && (e.metaKey || e.shiftKey)) {
     if(timeTip.starting){
       timeTip.close();
       console.log('time count close')
     }else{
-      console.log(`time count start 1min 现在是${hours}:${minutes}`)
+      console.log(`time count start 40min 现在是${hours}:${minutes}`)
       timeTip.start(1); // min
     }
   }
