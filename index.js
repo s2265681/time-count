@@ -7,7 +7,7 @@ import countDownInit from "./js/countdown.js";
 import TimeTip from "./js/timetip.js";
 import { getCurrentTimeInfo } from "./js/utils.js";
 
-const timeTip = new TimeTip({ w: 3, h: 3, bg: "red" });
+const timeTip = new TimeTip({ w: 5, h: 5, bg: "red" });
 
 window.onload = async function () {
   countDownInit();
