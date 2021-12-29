@@ -15,6 +15,8 @@
       <img id="fullScreen" src="./image/fullscreen.png" />
       <img id="exitFullScreen" src="./image/exitfullscreen.png" />
     </div>
+    <!-- 展示天气信息 -->
+    <div class="weather">杭州 天气： 晴</div>
   </body>
   <script src="js/jquery.min.js"></script>
   <!-- 天气接口 -->
@@ -31,6 +33,13 @@
       var currentDay = wt[0];
       var day = currentDay.info.day;
       var night = currentDay.info.night;
+      var weather = document.querySelector(".weather");
+      var hour = new Date().getHours();
+      if (hour <= 12) {
+        weather.innerHTML = `杭州 白天天气 ${day[1]}`;
+      } else {
+        weather.innerHTML = `杭州 晚上天气 ${night[1]}`;
+      }
       weatherCallback = Promise.resolve({ day: day[1], night: night[1] });
     }
   </script>

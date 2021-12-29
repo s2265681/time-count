@@ -2,10 +2,12 @@ export default class TimeTip {
   constructor({ w, h, bg }) {
     this.clientHeight = document.body.clientHeight;
     this.clientWidth = document.body.clientWidth;
-    this.frame = this.init(w, h, bg);
-    this.starting = false
+    this.callRingStart = null;
+    this.callRingEnd = null;
+    this.starting = false;
     this.startId = null;
     this.flashId = null;
+    this.frame = this.init(w, h, bg);
   }
   init(w = 3, h = 3, bg = "red") {
     // 生成四个dom
@@ -17,14 +19,19 @@ export default class TimeTip {
     `;
     const cd = document.createElement("div");
     cd.innerHTML = toHtml;
+    // 生成audio
+    this.renderAudio();
     return cd;
   }
-  start(frequency = 40) {
+  start(frequency = 40, fn = () => {}) {
     // min
-    this.starting = true
+    this.starting = true;
     let frequencySecond = frequency * 60 * 1000;
     this.startId = window.setTimeout(() => {
       this.startFlash();
+      fn();
+      console.log(this, "this...");
+      this.callRingStart.play();
     }, frequencySecond);
   }
   startFlash(timeout = 500) {
@@ -40,7 +47,7 @@ export default class TimeTip {
     }, timeout);
   }
   close() {
-    if(this.frame)document.body.removeChild(this.frame);
+    if (this.frame) document.body.removeChild(this.frame);
     if (this.startId) {
       window.clearInterval(this.startId);
       this.startId = null;
@@ -49,6 +56,32 @@ export default class TimeTip {
       window.clearInterval(this.flashId);
       this.flashId = null;
     }
-    this.starting = false
+    this.starting = false;
+    this.stopAudio();
+  }
+  renderAudio() {
+    const callRingStart = document.createElement("audio");
+    callRingStart.src =
+      "https://teamind-static-oss.oss-accelerate.aliyuncs.com/bells/meeting.mp3";
+    callRingStart.style.display = "none";
+    callRingStart.loop = true;
+    callRingStart.muted = false;
+    callRingStart.preload = true;
+    const callRingEnd = document.createElement("audio");
+    callRingEnd.style.display = "none";
+    callRingEnd.muted = false;
+    callRingEnd.preload = true;
+    callRingEnd.src =
+      "https://teamind-static-oss.oss-accelerate.aliyuncs.com/bells/hangup.mp3";
+    console.log(this, "this...");
+    this.callRingStart = callRingStart;
+    this.callRingEnd = callRingEnd;
+  }
+  stopAudio() {
+    if (!this.callRingStart || !this.callRingEnd) return;
+    this.callRingStart.pause();
+    this.callRingEnd.play();
+    document.removeChild(this.callRingStart);
+    document.removeChild(this.callRingEnd);
   }
 }
