@@ -13,7 +13,7 @@ window.onload = async function () {
   countDownInit();
   setTimeout(()=>{
     alert("按住shift+空格开启/关闭计时提醒功能！");
-  },200)
+  },500)
 };
 
 window.addEventListener("keydown", (e) => {

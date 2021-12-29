@@ -47,7 +47,7 @@ export default class TimeTip {
     }, timeout);
   }
   close() {
-    if (this.frame) document.body.removeChild(this.frame);
+    if (this.frame && this.flashId) document.body.removeChild(this.frame);
     if (this.startId) {
       window.clearInterval(this.startId);
       this.startId = null;
@@ -81,7 +81,5 @@ export default class TimeTip {
     if (!this.callRingStart || !this.callRingEnd) return;
     this.callRingStart.pause();
     this.callRingEnd.play();
-    document.removeChild(this.callRingStart);
-    document.removeChild(this.callRingEnd);
   }
 }
