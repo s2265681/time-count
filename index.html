@@ -35,7 +35,7 @@
       var night = currentDay.info.night;
       var weather = document.querySelector(".weather");
       var hour = new Date().getHours();
-      if (hour <= 12) {
+      if (hour > 6 || hour < 22) {
         weather.innerHTML = `杭州 白天天气 ${day[1]}`;
       } else {
         weather.innerHTML = `杭州 晚上天气 ${night[1]}`;
