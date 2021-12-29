@@ -8,7 +8,7 @@ function getCurrentTimeInfo() {
   let minutes = myDate.getMinutes();
   minutes = minutes < 10 ? '0' + minutes : minutes 
   let dayType = 'day'
-  if(hours>12 && hours < 24) dayType = 'night'
+  if(hours <6 && hours < 22) dayType = 'night'
   return {
     year,
     month,
