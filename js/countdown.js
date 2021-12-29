@@ -6,13 +6,16 @@
 import createBackgroundCanvas from "./bg.js";
 import digit from "./digit.js";
 
-var WINDOW_WIDTH = 1024;
-var WINDOW_HEIGHT = 768;
+var WINDOW_WIDTH = document.body.clientWidth;
+var WINDOW_HEIGHT = document.body.clientHeight;
 var RADIUS = 8;
 var MARGIN_LEFT = 30;
 var MARGIN_TOP = 60;
 // var endTime = new Date(2021, 11, 07, 18, 47, 52);
 var curShowTimeSeconds = 0;
+
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
 
 var balls = [];
 var pattern = null;
@@ -30,22 +33,24 @@ const colors = [
   "#CC0000",
 ];
 
-var time = 0;
-
-// 初始化 倒计时
-export default function countDownInit() {
-  const canvas = document.getElementById("canvas");
-  const context = canvas.getContext("2d");
-
+export function updateCanvas() {
   WINDOW_WIDTH = document.body.clientWidth;
   WINDOW_HEIGHT = document.body.clientHeight;
+  canvas.width = WINDOW_WIDTH;
+  canvas.height = WINDOW_HEIGHT;
 
   MARGIN_LEFT = Math.round(WINDOW_WIDTH / 10);
   RADIUS = Math.round((WINDOW_WIDTH * 4) / 5 / 108) - 1;
   MARGIN_TOP = Math.round(WINDOW_HEIGHT / 5);
+   
+  // 更新背景
+  pattern = null;
+}
 
-  canvas.width = WINDOW_WIDTH;
-  canvas.height = WINDOW_HEIGHT;
+// 初始化 倒计时
+export default function countDownInit() {
+  updateCanvas();
+
   curShowTimeSeconds = getCurShowTimeSeconds();
 
   setInterval(() => {

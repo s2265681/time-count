@@ -3,7 +3,7 @@
  * @Autor: rockshang
  * @Date: 2021-12-24 11:59:44
  */
-import countDownInit from "./js/countdown.js";
+import countDownInit, { updateCanvas } from "./js/countdown.js";
 import TimeTip from "./js/timetip.js";
 import { getCurrentTimeInfo } from "./js/utils.js";
 
@@ -11,10 +11,15 @@ const timeTip = new TimeTip({ w: 5, h: 5, bg: "red" });
 
 window.onload = async function () {
   countDownInit();
-  setTimeout(()=>{
+  setTimeout(() => {
     alert("按住shift+空格开启/关闭计时提醒功能！");
-  },500)
+  }, 500);
 };
+
+window.addEventListener("resize", function () {
+  console.log(updateCanvas,"11");
+  updateCanvas();
+});
 
 window.addEventListener("keydown", (e) => {
   if (e.keyCode === 32 && (e.metaKey || e.shiftKey)) {
@@ -27,7 +32,7 @@ function doTimeCount() {
   if (timeTip.starting) {
     timeTip.close();
     console.log("time count close");
-    alert('计时提醒功能已关闭！')
+    alert("计时提醒功能已关闭！");
   } else {
     // 设置多少分支提醒
     let userMinus = +prompt("设置多少分钟后提醒⏰！");
